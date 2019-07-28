@@ -17,9 +17,9 @@ RUN wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.22.0.tar.gz 
 RUN yum -y install java-1.8.0-openjdk-devel.x86_64 \
 
   && touch /etc/profile.d/java.sh \
-  && echo "export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.212.b04-0.el7_6.x86_64" >> touch /etc/profile.d/java.sh  \
-  && echo "export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar" >> touch /etc/profile.d/java.sh  \ 
-  && echo "export PATH=$PATH:$JAVA_HOME/bin" >> touch /etc/profile.d/java.sh \
+  && echo "export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.212.b04-0.el7_6.x86_64" >>  /etc/profile.d/java.sh  \
+  && echo "export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar" >>  /etc/profile.d/java.sh  \ 
+  && echo "export PATH=$PATH:$JAVA_HOME/bin" >> /etc/profile.d/java.sh \
   && source /etc/profile 
 
 RUN wget http://nginx.org/download/nginx-1.8.1.tar.gz \
