@@ -14,17 +14,7 @@ RUN wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.22.0.tar.gz 
   && cd  /usr/local/src/git-2.22.0 && ./configure --prefix=/usr/local/git \
   $$ make && make install
 
-ENV JAVA_VERSION="1.8.0_141"
-
-ENV JAVA_HOME="/usr/local/src/jdk${JAVA_VERSION}"
-
-ENV PATH="${PATH}:${JAVA_HOME}/bin"
-RUN mkdir -p /usr/local/src \
-  && wget --no-cookies --no-check-certificate --header \
-   "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
-   "http://download.oracle.com/otn-pub/java/jdk/8u141-b15/336fa29ff2bb4ef291e347e091f7f4a7/jdk-8u141-linux-x64.tar.gz" \
-  && tar -xzf jdk-8u141-linux-x64.tar.gz && mv $jdk{JAVA_VERSION} /usr/local/src/
-
+FROM chenquan97/centos-jdk8
 
 RUN wget http://nginx.org/download/nginx-1.8.1.tar.gz \
   && tar -zxvf nginx-1.8.1.tar.gz && cd nginx-1.8.1 \
@@ -35,7 +25,7 @@ RUN wget http://nginx.org/download/nginx-1.8.1.tar.gz \
   && echo "/usr/src/nginx/sbin/nginx" >> /etc/rc.local \
   && cd /usr/src/nginx/sbin && ./nginx
 
-RUN yum install -y wget && wget https://nodejs.org/dist/v10.15.0/node-v10.15.0-linux-x64.tar.xz \
+RUN wget https://nodejs.org/dist/v10.15.0/node-v10.15.0-linux-x64.tar.xz \
   && tar -xvf node-v10.15.0-linux-x64.tar.xz \
   && mv node-v10.15.0-linux-x64 /usr/local/node-v10.15.0 \
   && ln -s /usr/local/node-v10.15.0/bin/node /usr/local/bin/node \
