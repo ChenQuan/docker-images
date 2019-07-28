@@ -1,13 +1,4 @@
 FROM chenquan97/centos7-systemctl
-#CMD ["/usr/sbin/init"]
-#RUN yum -y install httpd; yum clean all; systemctl enable httpd.service
-#EXPOSE 80
-
-#RUN yum install -y yum-utils device-mapper-persistent-data lvm2 \
-#  && yum-config-manager --add-repo http://download.docker.com/linux/centos/docker-ce.repo \
-#  && yum install -y  docker-ce
-
-#RUN  systemctl start docker; systemctl enable docker; docker -v;
 
 RUN yum install -y wget \
   && cd /etc/yum.repos.d/ \
@@ -24,9 +15,11 @@ RUN wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.22.0.tar.gz 
   $$ make && make install
 
 RUN yum -y install java-1.8.0-openjdk-devel.x86_64 \
-  && echo "export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.212.b04-0.el7_6.x86_64" >> /etc/profile \
-  && echo "export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar" >> /etc/profile \ 
-  && echo "export PATH=$PATH:$JAVA_HOME/bin" >>  /etc/profile \
+
+  && touch /etc/profile.d/java.sh \
+  && echo "export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.212.b04-0.el7_6.x86_64" >> touch /etc/profile.d/java.sh  \
+  && echo "export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar" >> touch /etc/profile.d/java.sh  \ 
+  && echo "export PATH=$PATH:$JAVA_HOME/bin" >> touch /etc/profile.d/java.sh \
   && source /etc/profile 
 
 RUN wget http://nginx.org/download/nginx-1.8.1.tar.gz \
@@ -77,8 +70,9 @@ RUN pip install --upgrade pip \
 RUN wget http://mirror.bit.edu.cn/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz \
   && tar -zxvf apache-maven-3.3.9-bin.tar.gz \
   && mv apache-maven-3.3.9 /usr/local/maven3 \
-  && echo "export MAVEN_HOME=/usr/local/maven3" >> /etc/profile \
-  && echo "export PATH=$MAVEN_HOME/bin:$PATH" >> /etc/profile \
+  && touch /etc/profile.d/mvn.sh \
+  && echo "export MAVEN_HOME=/usr/local/maven3" >> /etc/profile.d/mvn.sh \
+  && echo "export PATH=$MAVEN_HOME/bin:$PATH" >> /etc/profile.d/mvn.sh \
   && source /etc/profile
 ## docker image
 #RUN systemctl start docker
