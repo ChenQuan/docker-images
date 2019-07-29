@@ -9,7 +9,7 @@ RUN yum install -y wget \
   && yum clean all
 
 RUN wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.22.0.tar.gz \
-  && tar -zxf git-2.22.0.tar.gz && mv git-2.22.0 /usr/local/src/git-2.22.0  && git-2.22.0.tar.gz \
+  && tar -zxf git-2.22.0.tar.gz && mv git-2.22.0 /usr/local/src/git-2.22.0  && rm -f git-2.22.0.tar.gz \
   && yum install -y curl-devel expat-devel gettext-devel openssl-devel zlib-devel \
   && yum install -y gcc perl-ExtUtils-MakeMaker \
   && cd  /usr/local/src/git-2.22.0 && ./configure --prefix=/usr/local/git \
