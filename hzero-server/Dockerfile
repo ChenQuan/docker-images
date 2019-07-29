@@ -1,3 +1,8 @@
+FROM redis
+
+
+
+
 FROM chenquan97/centos7-systemctl
 
 RUN yum install -y wget \
@@ -34,7 +39,8 @@ RUN wget http://nginx.org/download/nginx-1.8.1.tar.gz \
   && cd /usr/src/nginx/sbin \
   && ./nginx -v \
   && echo "/usr/src/nginx/sbin/nginx" >> /etc/rc.local \
-  && cd /usr/src/nginx/sbin && ./nginx
+  && cd /usr/src/nginx/sbin && ./nginx \
+  && rm -rf /nginx-1.8.1
 
 RUN wget https://nodejs.org/dist/v10.15.0/node-v10.15.0-linux-x64.tar.xz \
   && tar -xvf node-v10.15.0-linux-x64.tar.xz && rm -f node-v10.15.0-linux-x64.tar.xz \
@@ -55,4 +61,5 @@ RUN wget http://mirror.bit.edu.cn/apache/maven/maven-3/3.3.9/binaries/apache-mav
   && source /etc/profile
 
 
+EXPOSE 6397 3306 9000
 CMD ["/usr/sbin/init"]
