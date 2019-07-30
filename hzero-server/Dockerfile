@@ -1,9 +1,4 @@
-FROM redis
-
-
-
-
-FROM chenquan97/centos7-systemctl
+FROM centos
 
 RUN yum install -y wget \
   && cd /etc/yum.repos.d/ \
@@ -59,7 +54,3 @@ RUN wget http://mirror.bit.edu.cn/apache/maven/maven-3/3.3.9/binaries/apache-mav
   && echo "export MAVEN_HOME=/usr/local/maven3" >> /etc/profile.d/mvn.sh \
   && echo "export PATH=$MAVEN_HOME/bin:$PATH" >> /etc/profile.d/mvn.sh \
   && source /etc/profile
-
-
-EXPOSE 6397 3306 9000
-CMD ["/usr/sbin/init"]
