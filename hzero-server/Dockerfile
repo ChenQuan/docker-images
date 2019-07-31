@@ -53,4 +53,6 @@ RUN wget http://mirror.bit.edu.cn/apache/maven/maven-3/3.3.9/binaries/apache-mav
   && touch /etc/profile.d/mvn.sh \
   && echo "export MAVEN_HOME=/usr/local/maven3" >> /etc/profile.d/mvn.sh \
   && echo "export PATH=$MAVEN_HOME/bin:$PATH" >> /etc/profile.d/mvn.sh \
-  && source /etc/profile
+  && source /etc/profile \
+  && rm -f /usr/local/maven3/conf/settings.xml
+COPY ./settings.xml  /usr/local/maven3/conf/settings.xml
