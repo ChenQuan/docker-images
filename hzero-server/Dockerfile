@@ -1,24 +1,21 @@
 FROM centos
 
-RUN yum install -y wget \
-  && cd /etc/yum.repos.d/ \
-  && wget http://mirrors.163.com/.help/CentOS6-Base-163.repo \
-  && sed -i 's#$releasever#6#g' CentOS6-Base-163.repo \
-  && yum clean all && yum makecache fast  && yum update -y \
+RUN yum clean all && yum clean metadata && yum clean dbcache && yum makecache && yum update \
+  && yum install -y wget \
   && yum install -y  gcc-c++ pcre pcre-devel zlib zlib-devel  openssl openssl-devel \
-  && yum clean all
+  && yum install -y curl-devel expat-devel gettext-devel openssl-devel zlib-devel \
+  && yum install -y gcc perl-ExtUtils-MakeMaker  \
+  && yum clean all && rm -rf /var/cache/yum/*
 
 RUN wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.22.0.tar.gz \
   && tar -zxf git-2.22.0.tar.gz && mv git-2.22.0 /usr/local/src/git-2.22.0  && rm -f git-2.22.0.tar.gz \
-  && yum install -y curl-devel expat-devel gettext-devel openssl-devel zlib-devel \
-  && yum install -y gcc perl-ExtUtils-MakeMaker \
   && cd  /usr/local/src/git-2.22.0 && ./configure --prefix=/usr/local/git \
   $$ make && make install
 
 
 ENV JAVA_VERSION="1.8.0_212" JAVA_HOME="/usr/local/src/jdk${JAVA_VERSION}" PATH="${PATH}:${JAVA_HOME}/bin"
 
-RUN  mkdir -p /usr/local/src && yum install -y wget \
+RUN  mkdir -p /usr/local/src \
   && wget https://github.com/chenquan/oracle-jdk-download/releases/download/8u212-b10/jdk-8u212-linux-x64.tar.gz \
   && tar -xzf jdk-8u212-linux-x64.tar.gz && mv jdk${JAVA_VERSION} /usr/local/src/ && rm -f jdk-8u212-linux-x64.tar.gz
 
